@@ -1,27 +1,49 @@
-import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import Discover from "./pages/Discover";
-import About from "./pages/About";
-import Search from "./pages/Search";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-import Wrapper from "./components/Wrapper";
+import React, { useState , useEffect } from "react";
+import API from "../../utils/API";
+import Container from "../../components/Container";
+import SearchForm from "../../components/SearchForm";
+import SearchResults from "../../components/SearchResults";
 
-function App() {
+function Search() {
+  const [search, setSearch] = useState("Wikipedia");
+  const [title, setTitle] = useState("");
+  const [url, setUrl] = useState("");
+  const [error, setError] = useState("");
+  useEffect(() => {
+    if (!search) {
+      return;
+    }
+    document.title = "Wikipedia Searcher";
+    API.searchTerms(search)
+      .then(res => {
+        if (res.data.length === 0) {
+          throw new Error("No results found.");
+        }
+        if (res.data.status === "error") {
+          throw new Error(res.data.message);
+        }
+        setTitle(res.data[1][0])
+        setUrl(res.data[3][0])
+        })
+        .catch(err => setError(err));    
+  }, [search]);
+  const handleInputChange = event => {
+    setSearch(event.target.value);
+  };
   return (
-    <Router>
       <div>
-        <Navbar />
-        <Wrapper>
-          <Route exact path="/" component={About} />
-          <Route exact path="/about" component={About} />
-          <Route exact path="/discover" component={Discover} />
-          <Route exact path="/search" component={Search} />
-        </Wrapper>
-        <Footer />
+  <Container style={{ minHeight: "100vh" }}>
+    <h1 className="text-center">Search For Anything on Wikipedia</h1>
+    <Alert type="danger" style={{ opacity: error ? 1 : 0, marginBottom: 10 }}>
+      {error}
+    </Alert>
+    <SearchForm
+      // handleFormSubmit={handleFormSubmit}
+      handleInputChange={handleInputChange}
+      results={search} />
+    <SearchResults title={title} url={url} />
+  </Container>
       </div>
-    </Router>
   );
-}
-
-export default App;
+  }
+export default Search;
