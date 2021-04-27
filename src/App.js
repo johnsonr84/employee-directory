@@ -1,7 +1,7 @@
 import React, { useState , useEffect } from "react";
 import API from "../../utils/API";
-import Container from "../../components/Container";
 import SearchForm from "../../components/SearchForm";
+import Table from "../../components/Table";
 import SearchResults from "../../components/SearchResults";
 
 function Search() {
