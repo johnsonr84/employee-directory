@@ -1,6 +1,8 @@
 h1 {
-    padding: 1rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
     text-align: center;
-    background-color: gray;
+    background-color: #20232A;
     color: white;
+    font-family: 'Roboto', sans-serif;
 }

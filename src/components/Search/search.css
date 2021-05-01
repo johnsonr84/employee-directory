@@ -1,0 +1,14 @@
+
+
+form {
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    padding: 3rem;
+    width: 100%;
+    background-color: #31363E;
+}
+
+.searchBtn {
+    background-color: #61DAFB;
+    margin: 1rem;
+}
